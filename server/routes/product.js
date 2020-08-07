@@ -10,8 +10,8 @@ router.post("/product/create", productController.create)
 // Get all products
 router.get("/product/get-all-products", productController.getProducts)
 
-// // Get a single product
-// router.get("/product/get-product/:id", productController.getProduct)
+// Get a single product
+router.get("/product/get-product/:id", productController.getProduct)
 
 // // Update a product
 // router.put("/product/update/:id", productController.update)

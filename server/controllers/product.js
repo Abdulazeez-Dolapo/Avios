@@ -53,6 +53,24 @@ class ProductController {
 			})
 		}
 	}
+
+	// Get a single product
+	static async getProduct(req, res) {
+		try {
+			const product = await Product.findOne({ _id: req.params.id })
+
+			res.json({
+				success: true,
+				product,
+				message: "product found",
+			})
+		} catch (error) {
+			res.status(404).json({
+				success: false,
+				message: "No product found",
+			})
+		}
+	}
 }
 
 module.exports = ProductController
