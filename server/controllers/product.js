@@ -105,8 +105,6 @@ class ProductController {
 		try {
 			// get the product
 			const product = await Product.findOne({ _id: req.params.productId })
-			console.log("product", product)
-
 			if (!product) {
 				return res.status(404).json({
 					success: false,
@@ -115,12 +113,10 @@ class ProductController {
 			}
 
 			// delete product variety
-
 			const productVariety = product.product_varieties
 			const newProductVariety = productVariety.filter(
 				variety => variety.id != req.params.varietyId
 			)
-			console.log("newProductVariety", newProductVariety)
 
 			// update product
 			await Product.findOneAndUpdate(
