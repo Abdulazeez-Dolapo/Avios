@@ -2,7 +2,7 @@ const Product = require("../models/product")
 
 class ProductController {
 	// Create product
-	static async create(req, res) {
+	static async createProduct(req, res) {
 		// TODO Validate user's input
 
 		try {
@@ -68,6 +68,35 @@ class ProductController {
 			res.status(404).json({
 				success: false,
 				message: "No product found",
+			})
+		}
+	}
+
+	// Update a product
+	static async updateProduct(req, res) {
+		try {
+			const updatedProduct = await Product.findOneAndUpdate(
+				{ _id: req.params.id },
+				{
+					$set: {
+						product_name: req.body.product_name,
+						product_description: req.body.product_description,
+						product_varieties: req.body.product_varieties,
+						date_uploaded: req.body.date_uploaded,
+						date_edited: new Date().toISOString(),
+					},
+				},
+				{ upsert: true }
+			)
+			res.json({
+				success: true,
+				product: updatedProduct,
+				message: "product updated",
+			})
+		} catch (error) {
+			res.status(500).json({
+				success: false,
+				message: error.message,
 			})
 		}
 	}

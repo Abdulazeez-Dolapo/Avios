@@ -5,7 +5,7 @@ const router = require("express").Router()
 const productController = require("../controllers/product")
 
 // Create a new product
-router.post("/product/create", productController.create)
+router.post("/product/create", productController.createProduct)
 
 // Get all products
 router.get("/product/get-all-products", productController.getProducts)
@@ -13,8 +13,8 @@ router.get("/product/get-all-products", productController.getProducts)
 // Get a single product
 router.get("/product/get-product/:id", productController.getProduct)
 
-// // Update a product
-// router.put("/product/update/:id", productController.update)
+// Update a product
+router.put("/product/update/:id", productController.updateProduct)
 
 // // Delete a product
 // router.delete("/product/delete/:id", productController.delete)
