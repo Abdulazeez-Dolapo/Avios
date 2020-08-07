@@ -27,6 +27,32 @@ class ProductController {
 			})
 		}
 	}
+
+	// Get all products
+	static async getProducts(req, res) {
+		try {
+			const products = await Product.find()
+
+			// check if no products are found
+			if (products.length < 1) {
+				return res.status(404).json({
+					success: false,
+					message: "No products found",
+				})
+			}
+
+			res.json({
+				success: true,
+				products,
+				message: "products found",
+			})
+		} catch (error) {
+			res.status(500).json({
+				success: false,
+				message: error.message,
+			})
+		}
+	}
 }
 
 module.exports = ProductController
