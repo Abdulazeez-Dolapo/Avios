@@ -75,7 +75,7 @@ class ProductController {
 	// Update a product
 	static async updateProduct(req, res) {
 		try {
-			const updatedProduct = await Product.findOneAndUpdate(
+			await Product.findOneAndUpdate(
 				{ _id: req.params.id },
 				{
 					$set: {
@@ -90,8 +90,56 @@ class ProductController {
 			)
 			res.json({
 				success: true,
-				product: updatedProduct,
-				message: "product updated",
+				message: "product updated successfully",
+			})
+		} catch (error) {
+			res.status(500).json({
+				success: false,
+				message: error.message,
+			})
+		}
+	}
+
+	// Delete a product's variety
+	static async deleteProductVariety(req, res) {
+		try {
+			// get the product
+			const product = await Product.findOne({ _id: req.params.productId })
+			console.log("product", product)
+
+			if (!product) {
+				return res.status(404).json({
+					success: false,
+					message: "Product does not exist",
+				})
+			}
+
+			// delete product variety
+
+			const productVariety = product.product_varieties
+			const newProductVariety = productVariety.filter(
+				variety => variety.id != req.params.varietyId
+			)
+			console.log("newProductVariety", newProductVariety)
+
+			// update product
+			await Product.findOneAndUpdate(
+				{ _id: req.params.productId },
+				{
+					$set: {
+						product_name: product.product_name,
+						product_description: product.product_description,
+						product_varieties: newProductVariety,
+						date_uploaded: product.date_uploaded,
+						date_edited: new Date().toISOString(),
+					},
+				},
+				{ upsert: true }
+			)
+
+			res.json({
+				success: true,
+				message: "Product variety deleted successfuly",
 			})
 		} catch (error) {
 			res.status(500).json({

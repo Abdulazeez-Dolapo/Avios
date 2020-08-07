@@ -16,7 +16,10 @@ router.get("/product/get-product/:id", productController.getProduct)
 // Update a product
 router.put("/product/update/:id", productController.updateProduct)
 
-// // Delete a product
-// router.delete("/product/delete/:id", productController.delete)
+// Delete a product variety
+router.delete(
+	"/product/delete/:productId/:varietyId",
+	productController.deleteProductVariety
+)
 
 module.exports = router
