@@ -3,8 +3,9 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 const cors = require("cors")
-const config = require("./config")
 
+const productRoutes = require("./routes/product")
+const config = require("./config")
 const app = express()
 
 // Middlewares
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // Routes
+app.use("/api", productRoutes)
 
 // Connect to database
 mongoose.connect(
